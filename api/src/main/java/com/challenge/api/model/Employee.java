@@ -1,59 +1,116 @@
 package com.challenge.api.model;
 
-import java.time.Instant;
+import java.util.Objects;
 import java.util.UUID;
 
-/**
- * Every abstraction of an Employee should, at the bare minimum, implement this interface. Consider this a binding
- * contract for the domain model of an Employee.
- */
-public interface Employee {
+public class Employee {
+    private UUID uuid;
+    private String firstName;
+    private String lastName;
+    private String email;
+    private String department;
+    private Double salary;
+    private String title;
 
-    UUID getUuid();
+    // default constructor
+    public Employee() {
+        this.uuid = UUID.randomUUID();
+    }
 
-    /**
-     * Set by either the Service or Data layer.
-     * @param uuid required non-null
-     */
-    void setUuid(UUID uuid);
+    // constructor with general fields besides uuid
+    public Employee(String firstName, String lastName, String email, String department, Double salary, String title) {
+        this.uuid = UUID.randomUUID();
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.department = department;
+        this.salary = salary;
+        this.title = title;
+    }
 
-    String getFirstName();
+    // getters and setters
 
-    void setFirstName(String name);
+    public UUID getUuid() {
+        return uuid;
+    }
 
-    String getLastName();
+    public void setUuid(UUID uuid) {
+        this.uuid = uuid;
+    }
 
-    void setLastName(String name);
+    public String getFirstName() {
+        return firstName;
+    }
 
-    String getFullName();
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
 
-    void setFullName(String name);
+    public String getLastName() {
+        return lastName;
+    }
 
-    Integer getSalary();
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
 
-    void setSalary(Integer salary);
+    public String getEmail() {
+        return email;
+    }
 
-    Integer getAge();
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-    void setAge(Integer age);
+    public String getDepartment() {
+        return department;
+    }
 
-    String getJobTitle();
+    public void setDepartment(String department) {
+        this.department = department;
+    }
 
-    void setJobTitle(String jobTitle);
+    public Double getSalary() {
+        return salary;
+    }
 
-    String getEmail();
+    public void setSalary(Double salary) {
+        this.salary = salary;
+    }
 
-    void setEmail(String email);
+    public String getTitle() {
+        return title;
+    }
 
-    Instant getContractHireDate();
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
-    void setContractHireDate(Instant date);
+    // employee comparison override method
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Employee employee = (Employee) o;
+        return Objects.equals(uuid, employee.uuid);
+    }
 
-    /**
-     * Nullable.
-     * @return null, if Employee has not been terminated.
-     */
-    Instant getContractTerminationDate();
+    // quick lookup method
+    @Override
+    public int hashCode() {
+        return Objects.hash(uuid);
+    }
 
-    void setContractTerminationDate(Instant date);
+    // outputs information and not just memory addresses
+    @Override
+    public String toString() {
+        return "Employee{" + "uuid="
+                + uuid + ", firstName='"
+                + firstName + '\'' + ", lastName='"
+                + lastName + '\'' + ", email='"
+                + email + '\'' + ", department='"
+                + department + '\'' + ", salary="
+                + salary + ", title='"
+                + title + '\'' + '}';
+    }
 }
